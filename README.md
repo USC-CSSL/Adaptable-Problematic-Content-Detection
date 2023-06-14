@@ -63,3 +63,6 @@ We describe the logic of each script to streamline running your own experiments.
 ![alt text](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/Figure%202.jpeg) 
 
 
+
+## Contributions 
+We are seeking to continually enhance the Continual Learning Benchmark for Problematic Content Detection (CLB-PCD) with additional tasks, models, and algorithms! If you would like to introduce a new task, model, or algorithm to the CLB-PCD benchmark, please create a Pull Request from your CLB-PCD fork. We will make an effort to incorporate your contribution and enable other researchers to explore it.
