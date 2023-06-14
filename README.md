@@ -70,7 +70,7 @@ We describe the logic of each script to streamline running your own experiments.
 
 ![alt text](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/Figure%202.jpeg)
 
-<<<<<<< HEAD
+
 There are two parameters in the config that can be used to create the task squence, **tasks** and **task_collection**.
 To use the tasks parameter, you need to pass the squence of the task in order by space between them as follow:
 
