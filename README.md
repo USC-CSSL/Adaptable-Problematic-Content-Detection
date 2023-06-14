@@ -70,6 +70,7 @@ We describe the logic of each script to streamline running your own experiments.
 
 ![alt text](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/Figure%202.jpeg)
 
+<<<<<<< HEAD
 There are two parameters in the config that can be used to create the task squence, **tasks** and **task_collection**.
 To use the tasks parameter, you need to pass the squence of the task in order by space between them as follow:
 
@@ -83,11 +84,11 @@ We created our upstream task as a _third_set_ task collection, therefore, you ca
 python run_model.py --task_collection third_set ....
 ```
 
-### Add new task collection
+### Adding new Task Collection
 
 To create your own tasks squence, you can add another task*collection in the \_data_utils/dataset.py* file and change _task_collection_to_tasks_ function on the same file to make the code run with the new task colleciton.
 
-### Add new dataset
+### Adding New Datasets and Tasks
 
 To add new datset you need to write a dataset adapter, there are three steps that you need to follow:
 
@@ -100,3 +101,11 @@ entry = {'context': Text,
          'qas':[{'question': "", 'answers': [{'text': answer, 'label': label_id}]}]
         }
 ```
+
+## Adding New Models and Algorithms
+
+## Contributions
+
+We are seeking to continually enhance the Continual Learning Benchmark for Problematic Content Detection (CLB-PCD) with additional tasks, models, and algorithms! If you would like to introduce a new task, model, or algorithm to the CLB-PCD benchmark, please create a Pull Request from your CLB-PCD fork. We will make an effort to incorporate your contribution and enable other researchers to explore it.
+
+If you have any questions please contact Ali Omrani ([aromani@usc.edu](mailto:aomrani@usc.edu)) and Alireza S. Ziabari ([ziabari@usc.edu](mailto:ziabari@usc.edu)).
