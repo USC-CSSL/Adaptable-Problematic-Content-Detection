@@ -24,7 +24,17 @@ Then you need to hydrate the tweets. You can use any of the various tools availa
 
 
 ## Environment
-We created our enviroment with conda with Python 3.8.5 and PyTorch 1.7.1. After creating the environment, used pip to install the packages in the `requirements.txt`.
+We created our enviroment with conda with Python 3.8.5 and PyTorch 1.7.1.
+```bash
+conda create --name <env_name> python=3.8.5
+conda activate <env_name>
+conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 -c pytorch
+
+```
+ After creating the environment, used pip to install the packages in the `requirements.txt`.
+```bash
+pip install -r requirements.txt
+```
 
 ## Running Experiments
 
