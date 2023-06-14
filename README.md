@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ## Running Experiments
 
-All the scripts are available in the script to run the models for upstream and downstream models, you can use the following shell files.
+You can use the [provided scripts](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/tree/main/script) to replicate all results in our paper.
 
 **Training on upstream**
 
@@ -56,3 +56,10 @@ sh ./script/fs_eval.sh
 ```
 sh ./script/fs_single.sh
 ```
+
+### Running your own experiments
+We describe the logic of each script to streamline running your own experiments. Let's assume we want to use the upstream task sequence described in the paper (figure below)
+
+![alt text](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/Figure%202.jpeg) 
+
+
