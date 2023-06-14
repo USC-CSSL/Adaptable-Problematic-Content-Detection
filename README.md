@@ -78,7 +78,7 @@ To use the tasks parameter, you need to pass the squence of the task in order by
 python run_model.py --tasks jigsaw-obscene ucc-generalisation_unfair hate-hateful ...
 ```
 
-We created our upstream task as a _third_set_ task collection, therefore, you can pass the task_collection parameter as follow:
+We created our upstream task as a `third_set` task collection, therefore, you can pass the `task_collection` parameter as follow:
 
 ```
 python run_model.py --task_collection third_set ....
@@ -86,9 +86,7 @@ python run_model.py --task_collection third_set ....
 
 This design allows you to easily explore various experimental setups with our benchmark. 
 
-### Adding new Task Collection
-
-To create your own tasks squence, you can add another task*collection in the \_data_utils/dataset.py* file and change _task_collection_to_tasks_ function on the same file to make the code run with the new task colleciton.
+To create your own tasks squence, you can add another `task_collection` in the [`/data_utils/dataset.py`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/tree/main/data_utils) file and change `task_collection_to_tasks` function on the same file to make the code run with the new task colleciton.
 
 ### Adding New Datasets and Tasks
 
