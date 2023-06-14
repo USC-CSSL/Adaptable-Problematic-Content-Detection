@@ -92,8 +92,8 @@ This design allows you to easily explore various experimental setups with our be
 
 To add new datset you need to write a dataset adapter, there are three steps that you need to follow:
 
-1. Choose a unique name id for the new dataset and create a python file with the same _NameID_dataset.py_ in data_utils directory.
-2. Create a class for the new dataset which inherit the LAMOLDataset, write the init*data file which creates a list of entries (like below) based on task name and pass them to \_self.data_tokenization* function.
+1. Choose a unique `<Name>` for the new dataset and create a python file with the same `<Name>_dataset.py` in [`data_utils`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/tree/main/data_utils) directory.
+2. Create a class for the new dataset which inherit the [`LAMOLDataset`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/data_utils/lamol_datasets.py), write the init*data file which creates a list of entries (like below) based on task name and pass them to \_self.data_tokenization* function.
 3. Add your dataset tasks on top of _data_utils/datasets.py_ file, and your new dataset class in _get_dataset_ function.
 
 ```
