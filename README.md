@@ -1,11 +1,26 @@
 # A Continual Learning Benchmark for Problematic Content Detection
 
-This repository is for a paper submitted to the Datasets & Benchmarks Track at NeurIPS 2023.
+This repository is for a paper **A Continual Learning Benchmark for Problematic Content Detection** submitted to the Datasets & Benchmarks Track at NeurIPS 2023.
+
+
+![alt text](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/Figure%201.jpg) 
 
 ## Data
- Our training data stream and few-shot datasets ar .
+To create a local copy of all datasets used in this benchmark follow the instructions below.
 
-Please, donwload public datasets that we used in our benchmark from [Google Drive](https://drive.google.com/drive/folders/1SLTprKo6OaDQtpmDXZ5RZu1vrDx0T-LA?usp=sharing), extract the downloaded data and place it under `PROJECT_DIR/datasets`. There are two datasets in our directory named as [hate](https://aclanthology.org/2022.lrec-1.238.pdf), and [abusive](https://arxiv.org/pdf/1802.00393.pdf) which are not available publicly, therefore, you need to hydrate the tweets or get them from the authors, then you can use our notebook in `PROJECT_DIR/notebooks/data_preparation.ipynb` to create the datasets that we used in our paper.
+1. Download the content of [Google Drive](https://drive.google.com/drive/folders/1SLTprKo6OaDQtpmDXZ5RZu1vrDx0T-LA?usp=sharing), extract the downloaded data and place it under `PROJECT_DIR/datasets`. This includes all datasets that are NOT from Twitter
+2. There are two datasets with Twitter as source. These datasets are publicly available as tweet ids which need to be hydrated. 
+
+First get the tweet ids
+- [Large-Scale Hate Speech Detection with Cross-Domain Transfer (hate) ](https://aclanthology.org/2022.lrec-1.238.pdf) - Tweet Ids available [here](https://zenodo.org/record/2657374) 
+- [Large Scale Crowdsourcing and Characterization of Twitter Abusive Behavior (abusive)](https://arxiv.org/pdf/1802.00393.pdf) Tweet Ids availabe [here](https://github.com/avaapm/hatespeech)
+
+Then you need to hydrate the tweets. You can use any of the various tools available. Here are a few
+- [Hydrator](https://github.com/DocNow/hydrator)
+- [Twarc](https://github.com/DocNow/twarc) - [Twarc Tutorial](https://scholarslab.github.io/learn-twarc/)
+
+
+ 3. Once you have all datasets, you can use our notebook in [`PROJECT_DIR/notebooks/data_preparation.ipynb`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/notebooks/data_preparation.ipynb) to prepare all datasets used in the benchmark.
 
 
 ## Environment
