@@ -70,7 +70,6 @@ We describe the logic of each script to streamline running your own experiments.
 
 ![alt text](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/Figure%202.jpeg)
 
-
 There are two parameters in the config that can be used to create the task squence, **tasks** or **task_collection**.
 To use the tasks parameter, you need to pass the squence of the task in order by space between them as follow:
 
@@ -86,7 +85,7 @@ python run_model.py --task_collection third_set ....
 
 To create your own tasks squence, you can add another `task_collection` in the [`/data_utils/dataset.py`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/tree/main/data_utils) file and change `task_collection_to_tasks` function on the same file to make the code run with the new task colleciton.
 
-This design allows you to easily explore various experimental setups with our benchmark. 
+This design allows you to easily explore various experimental setups with our benchmark.
 
 ## Adding New Datasets and Tasks
 
@@ -103,9 +102,27 @@ entry = {'context': Text,
 
 3. Add your dataset tasks on top of [`data_utils/datasets.py`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/data_utils/datastes.py) file, and your new dataset class in `get_dataset` function.
 
-
-
 ## Adding New Models and Algorithms
+
+To configure the existing model algorithms, there are several parameters as follow:
+
+- _--no_param_gen_: will not use HNet model (adapter or transformer model)
+- _--train_all_: train all the parameter in the model (will not use HNet model)
+- _--skip_adapter_: will not pass through adapters.
+- _--cl_method_: continual model which can get three values hnet (add regularizer for BiHNet model), ewc (add EWC regularizer to the model), naive (vanilla model).
+
+* _h_l2reg_: regularization coefficient for hnet or ewc methods.
+
+- _--mtl_: create multi task model (need to pass --mtl_task_num)
+
+* _--no_short_term_: will not use short term memory (HNet model instead of BiHNet)
+* _--hard_long_term_: compute long term memory
+* _--train_task_embs_: learn task embedding with embedding size of _--long_term_task_emb_num_
+
+To change the model architecture, there are the following options:
+
+- _--adapter_dim_: adapter hidden layer size
+- _--generator_hdim_: weight generator hidden layer size
 
 ## Contributions
 
