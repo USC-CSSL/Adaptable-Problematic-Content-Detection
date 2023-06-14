@@ -130,4 +130,4 @@ To write new model, you need to write a continual model in [`nets/cl_model.py`](
 
 We are seeking to continually enhance the Continual Learning Benchmark for Problematic Content Detection (CLB-PCD) with additional tasks, models, and algorithms! If you would like to introduce a new task, model, or algorithm to the CLB-PCD benchmark, please create a Pull Request from your CLB-PCD fork. We will make an effort to incorporate your contribution and enable other researchers to explore it.
 
-If you have any questions please contact Ali Omrani ([aromani@usc.edu](mailto:aomrani@usc.edu)) and Alireza S. Ziabari ([ziabari@usc.edu](mailto:ziabari@usc.edu)).
+If you have any questions please contact Ali Omrani ([aromani@usc.edu](mailto:aomrani@usc.edu)) and Alireza S. Ziabari ([salkhord@usc.edu](mailto:salkhord@usc.edu)).
