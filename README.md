@@ -84,9 +84,9 @@ We created our upstream task as a `third_set` task collection, therefore, you ca
 python run_model.py --task_collection third_set ....
 ```
 
-This design allows you to easily explore various experimental setups with our benchmark. 
-
 To create your own tasks squence, you can add another `task_collection` in the [`/data_utils/dataset.py`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/tree/main/data_utils) file and change `task_collection_to_tasks` function on the same file to make the code run with the new task colleciton.
+
+This design allows you to easily explore various experimental setups with our benchmark. 
 
 ### Adding New Datasets and Tasks
 
