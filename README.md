@@ -88,7 +88,7 @@ To create your own tasks squence, you can add another `task_collection` in the [
 
 This design allows you to easily explore various experimental setups with our benchmark. 
 
-### Adding New Datasets and Tasks
+## Adding New Datasets and Tasks
 
 You can easily add a dataset to the benchmark by following the three steps described below:
 
