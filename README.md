@@ -93,7 +93,7 @@ This design allows you to easily explore various experimental setups with our be
 You can easily add a dataset to the benchmark by following the three steps described below:
 
 1. Choose a unique `<Name>` for the new dataset and create a python file with the same `<Name>_dataset.py` in [`data_utils`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/tree/main/data_utils) directory.
-2. Create a class for the new dataset which inherit the [`LAMOLDataset`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/data_utils/lamol_datasets.py), write the init*data file which creates a list of entries (below) based on task name and pass them to `self.data_tokenization` function.
+2. Create a class for the new dataset which inherit the [`LAMOLDataset`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/data_utils/lamol_datasets.py), write the `init_data` function which creates a list of entries (below) based on task name and pass them to `self.data_tokenization` function.
 
 ```python
 entry = {'context': Text,
