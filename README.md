@@ -124,6 +124,8 @@ To change the model architecture, there are the following options:
 - _--adapter_dim_: adapter hidden layer size
 - _--generator_hdim_: weight generator hidden layer size
 
+To write new model, you need to write a continual model in [`nets/cl_model.py`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/nets/cl_model.py), and configure your model training procedure in `train` function in [`run_model.py`](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/run_model..py).
+
 ## Contributions
 
 We are seeking to continually enhance the Continual Learning Benchmark for Problematic Content Detection (CLB-PCD) with additional tasks, models, and algorithms! If you would like to introduce a new task, model, or algorithm to the CLB-PCD benchmark, please create a Pull Request from your CLB-PCD fork. We will make an effort to incorporate your contribution and enable other researchers to explore it.
