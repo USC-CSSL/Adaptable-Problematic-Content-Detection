@@ -334,6 +334,32 @@ FILTERED_THIRD_SET_FS_TASKS = ['cmsb-sexist', 'misogyny', 'stormfront',
 PILOT_SET_TASKS = [ 'ucc-generalisation_unfair', 'dygen-hate','cad-affiliationdirectedabuse', 'jigsaw-insult']
 PILOT_SET_FS_TASKS = ['cmsb-sexist', 'misogyny', 'stormfront', 'conan-poc', 'BAD4', 'us_election-hof']
 
+FORTH_SET = ['cad-identitydirectedabuse', 'personal_attack-ra', 'jigsaw-obscene', 'ucc-healthy', 
+             'jigsaw-toxicity', 'ucc-dismissive', 'ucc-generalisation_unfair', 'personal_attack-a', 
+             'ucc-hostile', 'ucc-sarcastic', 'ghc-vo', 'cad-affiliationdirectedabuse', 
+             'jigsaw-identity_attack', 'jigsaw-threat', 'abusive-abusive', 'hate-hateful', 
+             'ucc-antagonize', 'ghc-hd', 'abusive-hateful', 'dygen-hate', 'cad-persondirectedabuse', 
+             'ucc-generalisation', 'personal_attack-tpa', 'hate-offensive', 'ucc-condescending', 
+             'jigsaw-insult']
+
+FIFTH_SET = ['cad-persondirectedabuse', 'cad-identitydirectedabuse', 'ucc-generalisation', 'jigsaw-obscene', 
+             'personal_attack-ra', 'cad-affiliationdirectedabuse', 'ucc-healthy', 'hate-offensive', 
+             'abusive-abusive', 'jigsaw-toxicity', 'ghc-hd', 'ucc-condescending', 'ghc-vo', 'dygen-hate', 
+             'ucc-generalisation_unfair', 'personal_attack-a', 'personal_attack-tpa', 'ucc-antagonize', 
+             'jigsaw-identity_attack', 'ucc-hostile', 'hate-hateful', 'jigsaw-insult', 'abusive-hateful', 
+             'jigsaw-threat', 'ucc-dismissive', 'ucc-sarcastic']
+
+PUBLISHED_TEMPORAL_SET = ['personal_attack-a', 'personal_attack-tpa', 'personal_attack-ra', 
+                          'jigsaw-threat', 'jigsaw-insult', 'jigsaw-toxicity', 'jigsaw-identity_attack', 'jigsaw-obscene', 
+                          'abusive-abusive', 'abusive-hateful', 
+                          'ghc-hd', 'ghc-vo', 
+                          'ucc-hostile', 'ucc-generalisation_unfair', 'ucc-dismissive', 'ucc-antagonize',  'ucc-condescending', 'ucc-sarcastic', 'ucc-healthy', 'ucc-generalisation', 
+                          'dygen-hate', 
+                          'cad-persondirectedabuse', 'cad-identitydirectedabuse', 'cad-affiliationdirectedabuse',
+                          'hate-offensive',  'hate-hateful'
+                          ]
+
+
 def task_collection_to_tasks(collection_full_name):
     items = collection_full_name.split(':')
     collection_name = items[0]
@@ -349,6 +375,12 @@ def task_collection_to_tasks(collection_full_name):
         tasks = THIRD_SET_TASKS
     elif collection_name == 'third_set_fs':
         tasks = FILTERED_THIRD_SET_FS_TASKS
+    elif collection_name == 'forth_set':
+        tasks = FORTH_SET
+    elif collection_name == 'fifth_set':
+        tasks = FIFTH_SET
+    elif collection_name == 'published_temporal_set':
+        tasks = PUBLISHED_TEMPORAL_SET
     elif collection_name == 'pilot':
         tasks = PILOT_SET_TASKS
     elif collection_name == 'pilot_fs':
