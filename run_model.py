@@ -127,8 +127,9 @@ def run(args, logger):
     if args.do_predict or args.do_few_shot_predict:
         if not args.fresh_checkpoint:
             checkpoint = os.path.join(args.output_dir, args.predict_checkpoint)
-            model.load_state_dict(convert_to_single_gpu(torch.load(checkpoint)), strict=False)
             logger.info("Loading checkpoint from {}".format(checkpoint))
+            model.load_state_dict(convert_to_single_gpu(torch.load(checkpoint)), strict=False)
+            logger.info("Loaded checkpoint from {}".format(checkpoint))
         else:
             logger.info('Not loading any checkpoint')
         if torch.cuda.is_available():
@@ -535,7 +536,9 @@ if __name__ == '__main__':
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     args.n_gpu = torch.cuda.device_count()
-
+    print("---------------------------", "\n"*20)
+    print(args.n_gpu)
+    print("---------------------------", "\n"*20)
     if args.n_gpu > 0:
         torch.cuda.manual_seed_all(args.seed)
 
