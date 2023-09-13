@@ -360,6 +360,16 @@ PUBLISHED_TEMPORAL_SET = ['personal_attack-a', 'personal_attack-tpa', 'personal_
                           ]
 
 
+SHUFFLED_PUBLISHED_TEMPORAL_SET = [ 'personal_attack-ra', 'personal_attack-tpa', 'personal_attack-a',  
+                          'jigsaw-toxicity',  'jigsaw-insult',  'jigsaw-obscene', 'jigsaw-obscene''jigsaw-identity_attack', 'jigsaw-threat',
+                          'abusive-hateful', 'abusive-abusive',  
+                          'ghc-vo', 'ghc-hd',  
+                          'ucc-generalisation', 'ucc-hostile', 'ucc-sarcastic',  'ucc-antagonize',  'ucc-condescending', 'ucc-generalisation_unfair', 'ucc-dismissive',  'ucc-healthy',  
+                          'dygen-hate', 
+                          'cad-persondirectedabuse',  'cad-affiliationdirectedabuse', 'cad-identitydirectedabuse',
+                          'hate-hateful', 'hate-offensive',  
+                          ]
+
 def task_collection_to_tasks(collection_full_name):
     items = collection_full_name.split(':')
     collection_name = items[0]
@@ -381,6 +391,8 @@ def task_collection_to_tasks(collection_full_name):
         tasks = FIFTH_SET
     elif collection_name == 'published_temporal_set':
         tasks = PUBLISHED_TEMPORAL_SET
+    elif collection_name == 'shuffled_published_temporal_set':
+        tasks = SHUFFLED_PUBLISHED_TEMPORAL_SET
     elif collection_name == 'pilot':
         tasks = PILOT_SET_TASKS
     elif collection_name == 'pilot_fs':
