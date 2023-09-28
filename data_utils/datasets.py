@@ -268,6 +268,15 @@ CROSSFIT_QA_METRICS = {
     'yelp_review_full': 'Pearson-Correlation'
 }
 
+SHUFFLE_TEMPORAL_SET_1 = ['personal_attack-ra', 
+                          'jigsaw-identity_attack', 
+                          'abusive-abusive', 
+                          'ghc-hd', 
+                          'ucc-hostile',
+                          'dygen-hate', 
+                           'cad-affiliationdirectedabuse',
+                            'hate-hateful']
+
 
 FIRST_SET_TASKS = ['cad-identitydirectedabuse', 'cad-persondirectedabuse', 'cad-affiliationdirectedabuse', 'cad-counterspeech', 
                    'personal_attack-a', 'personal_attack-qa', 'personal_attack-ra', 'personal_attack-tpa', 
@@ -361,7 +370,7 @@ PUBLISHED_TEMPORAL_SET = ['personal_attack-a', 'personal_attack-tpa', 'personal_
 
 
 SHUFFLED_PUBLISHED_TEMPORAL_SET = [ 'personal_attack-ra', 'personal_attack-tpa', 'personal_attack-a',  
-                          'jigsaw-toxicity',  'jigsaw-insult',  'jigsaw-obscene', 'jigsaw-obscene''jigsaw-identity_attack', 'jigsaw-threat',
+                          'jigsaw-toxicity',  'jigsaw-insult',  'jigsaw-obscene', 'jigsaw-identity_attack', 'jigsaw-threat',
                           'abusive-hateful', 'abusive-abusive',  
                           'ghc-vo', 'ghc-hd',  
                           'ucc-generalisation', 'ucc-hostile', 'ucc-sarcastic',  'ucc-antagonize',  'ucc-condescending', 'ucc-generalisation_unfair', 'ucc-dismissive',  'ucc-healthy',  
@@ -397,6 +406,8 @@ def task_collection_to_tasks(collection_full_name):
         tasks = PILOT_SET_TASKS
     elif collection_name == 'pilot_fs':
         tasks = PILOT_SET_FS_TASKS
+    elif collection_name == 'shuffle_tasks_set_1':
+        tasks = SHUFFLE_TEMPORAL_SET_1
     if len(items) > 1:
         start = int(items[1])
         stop = int(items[2])

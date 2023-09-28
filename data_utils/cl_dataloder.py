@@ -7,6 +7,7 @@ import logging
 import torch
 import numpy as np
 import torch.nn.functional as F
+import IPython
 
 logger = logging.getLogger(__name__)
 
@@ -104,6 +105,8 @@ class TaskSequence(object):
         # cache_file = 'datasets/cache_first_set_fs.pkl'
         if not self.use_cache or not os.path.isfile(cache_file):
             for task_key in self.task_keys:
+                logger.info(f'Caching {task_key}')
+
                 for split in splits:
                     # if task_key in LEOPARD_TASKS and (args.task_collection in [None, 'leopard']): # few shot learning datasets, specify shot num
                     #     for split_id in range(self.max_split_id):
@@ -127,7 +130,6 @@ class TaskSequence(object):
             logger.info(f'Loading dataset from {cache_file}')
             with open(cache_file, 'rb') as f:
                 self.encoded_dataset = pickle.load(f)
-
         for task_key in self.encoded_dataset:
             for split in splits:
                 shuffle = split == 'train'
@@ -144,8 +146,14 @@ class TaskSequence(object):
                     #     self.balance_dataset(self.encoded_dataset[task_key][split], self.balance_ratio)
                     if self.train_limit != -1:
                         self.trim_subset(self.encoded_dataset[task_key][split], self.train_limit)
+#                     positive_samples = sum([x[4] for x in self.encoded_dataset[task_key][split]])/len( self.encoded_dataset[task_key][split])
                 data = self.encoded_dataset[task_key][split]
-                
+                # IPython.embed(); exit();
+                if task_key in self.args.shuffle_task_keys:
+                    mutable_list = list(data.targets)
+                    random.shuffle(mutable_list)
+                    data.targets = tuple(mutable_list)
+                    logger.info(f"********** Shuffling task {task_key}*******************")
                 # weighted sampler to handle heavy dataset imbalance
                 pos_ratio = np.sum(data.targets) / len(data)
                 if self.balance_ratio > 0 and split == 'train' and pos_ratio < self.balance_ratio:
@@ -159,7 +167,7 @@ class TaskSequence(object):
                 else:
                     data_loader = DataLoader(data, shuffle=shuffle, batch_size=batch_size)
                 self.data_loader_maps[task_key][split] = data_loader
-
+        IPython.embed();
 
         # state the label space from the training set
         for task_key in self.encoded_dataset:

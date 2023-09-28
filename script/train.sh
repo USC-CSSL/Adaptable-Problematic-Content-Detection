@@ -5,9 +5,10 @@
 #SBATCH --gres=gpu:1
 #SBATCH --ntasks=1
 
-
-cd /home/salkhord/Continual-Problematic-Content-Detection-Benchmark
-source venv/bin/activate
+cd ~/
+source clenv/bin/activate
+cd Continual-Problematic-Content-Detection-Benchmark
+pwd
 
 reg=0.01
 lr=1e-4
@@ -16,6 +17,7 @@ seed=0
 task_collection=$1
 eval_every_k_tasks=25
 mtl_task_num=26
+
 
 
 

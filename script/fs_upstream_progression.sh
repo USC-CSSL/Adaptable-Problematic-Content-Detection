@@ -14,7 +14,7 @@ source clenv/bin/activate
 cd Continual-Problematic-Content-Detection-Benchmark
 pwd
 
-gpu=1
+gpu=6
 reg=0.01
 lr=1e-4
 seed=0
@@ -37,7 +37,7 @@ few_shot_eval_period=200
 # few_shot_eval_period=1
 
 
-for i in {0..25}
+for i in {17..22}
 do
     filename="best-model_task_$i.pt"
     postfix=naive_16shot_task_$i

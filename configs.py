@@ -11,6 +11,8 @@ def get_args(special=None):
     #parser.add_argument("--dataset", default="zsre", required=True)
     parser.add_argument("--tasks", nargs='*')
     parser.add_argument("--task_collection", nargs='?')
+    parser.add_argument("--shuffle_task_collection", nargs='?')
+
     parser.add_argument('--split_id', type=int, default=-1)
     parser.add_argument('--merge_split', action='store_true')
     parser.add_argument("--no_cache", action='store_true')
@@ -208,6 +210,9 @@ def get_args(special=None):
         raise ValueError('conflicting {}, {}'.format(args.task_collection, args.tasks))
     elif args.task_collection:
         args.tasks = task_collection_to_tasks(args.task_collection)
+
+    if args.shuffle_task_collection:
+        args.shuffle_task_keys = task_collection_to_tasks(args.shuffle_task_collection)
 
     # dirty fix
     # if args.do_few_shot_predict:

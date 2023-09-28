@@ -135,6 +135,8 @@ class LAMOLDataset(Dataset):
         self.max_a_len = []
         self.add_space = args.add_space
         self.lamol_format = kwargs.get('lamol_format', False)
+        self.adversarial = False
+        
         if full_init:
             self.init_data()
 
