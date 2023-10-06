@@ -141,7 +141,7 @@ If you use the code or findings from this repository in your work, please consid
 ```plaintext
 @article{omrani2023towards,
   title={Towards a Unified Framework for Adaptable Problematic Content Detection via Continual Learning},
-  author={Ali Omrani and Alireza S. Ziabari and Preni Golazizian and Jeffery Sorensen and Morteza Dehghani},
+  author={Ali Omrani and Alireza S. Ziabari and Preni Golazizian and Jeffrey Sorensen and Morteza Dehghani},
   journal={arXiv preprint arXiv:2309.16905},
   year={2023}
 }
