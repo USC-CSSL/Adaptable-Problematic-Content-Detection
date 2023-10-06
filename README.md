@@ -1,4 +1,8 @@
 # Towards a Unified Framework for Adaptable Problematic Content Detection via Continual Learning
+
+**Preprint:** [Towards a Unified Framework for Adaptable Problematic Content Detection via Continual Learning](https://browse.arxiv.org/pdf/2309.16905.pdf) 
+by Ali Omrani, Alireza Ziabari, Preni Golazizian, Jeffrey Sorensen, and Morteza Dehghani
+
 Detecting problematic content, such as hate speech, is a multifaceted and ever-changing task, influenced by social dynamics, user populations, diversity of sources, and evolving language. There has been significant efforts, both in academia and in industry, to develop annotated resources that capture various aspects of problematic content. Due to researchers' diverse objectives, the annotations are inconsistent and hence, reports of progress on detection of problematic content are fragmented. This pattern is expected to persist unless we consolidate resources considering the dynamic nature of the problem. We propose integrating the available resources, and leveraging their dynamic nature to break this pattern. In this paper, we introduce a continual learning benchmark and framework for problematic content detection comprising over 84 related tasks encompassing 15 annotation schemas from 8 sources. Our framework creates a novel measure of progress: prioritizing the adaptability of classifiers to evolving tasks over excelling in specific tasks. To ensure the continuous relevance of our framework, we designed it so that new tasks can easily be integrated into the benchmark. Our baseline results demonstrate the potential of continual learning in capturing the evolving content and adapting to novel manifestations of problematic content.
 
 ![alt text](https://github.com/Ali-Omrani/Continual-Problematic-Content-Detection-Benchmark/blob/main/Figure%201.jpg)
@@ -130,3 +134,14 @@ To write new model, you need to write a continual model in [`nets/cl_model.py`](
 We are seeking to continually enhance the Continual Learning Benchmark for Problematic Content Detection (CLB-PCD) with additional tasks, models, and algorithms! If you would like to introduce a new task, model, or algorithm to the CLB-PCD benchmark, please create a Pull Request from your CLB-PCD fork. We will make an effort to incorporate your contribution and enable other researchers to explore it.
 
 If you have any questions please contact Ali Omrani ([aromani@usc.edu](mailto:aomrani@usc.edu)) and Alireza S. Ziabari ([salkhord@usc.edu](mailto:salkhord@usc.edu)).
+
+## Citation
+If you use the code or findings from this repository in your work, please consider citing our paper:
+
+```plaintext
+@article{omrani2023towards,
+  title={Towards a Unified Framework for Adaptable Problematic Content Detection via Continual Learning},
+  author={Ali Omrani and Alireza S. Ziabari and Preni Golazizian and Jeffery Sorensen and Morteza Dehghani},
+  journal={arXiv preprint arXiv:2309.16905},
+  year={2023}
+}
