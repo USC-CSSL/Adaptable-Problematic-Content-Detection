@@ -100,7 +100,7 @@ class TaskSequence(object):
         else: 
             joint_task_keys = '_'.join(self.task_keys)
             
-        cache_file = 'datasets/classificatrion_cache_{}.pkl'.format(joint_task_keys)
+        cache_file = f'datasets/{args.model.split("/")[-1]}_classificatrion_cache_{joint_task_keys}.pkl'.format()
         # seq_class = None
         # cache_file = 'datasets/cache_first_set_fs.pkl'
         if not self.use_cache or not os.path.isfile(cache_file):
@@ -167,7 +167,7 @@ class TaskSequence(object):
                 else:
                     data_loader = DataLoader(data, shuffle=shuffle, batch_size=batch_size)
                 self.data_loader_maps[task_key][split] = data_loader
-        IPython.embed();
+
 
         # state the label space from the training set
         for task_key in self.encoded_dataset:

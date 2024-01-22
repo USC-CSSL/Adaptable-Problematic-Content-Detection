@@ -2,11 +2,11 @@ import os
 import numpy as np
 import torch
 import torch.nn.functional as F
-from transformers import BartTokenizer, BartConfig
+from transformers import BartTokenizer, RobertaTokenizer 
 from transformers import AdamW, get_linear_schedule_with_warmup, BartForConditionalGeneration
-from nets.adapter_bart import BartForSequenceClassificationWithAdapter
+from nets.adapter_bart import BartForSequenceClassificationWithAdapter, BartWithAdapterConfig
 
-from nets.adapter_bart import BartWithAdapterConfig
+from nets.adapter_roberta import RobertaForSequenceClassificationWithAdapter, RobertaWithAdapterConfig
 from nets.cl_model import ConditionedHyperNetForCL, ConditionalHyperNetL2Reg
 
 from nets.regularizers import Weight_Regularized_AdamW
@@ -47,12 +47,23 @@ def get_optimizer(args, model, optimizer_grouped_parameters):
 
 
 def run(args, logger):
-    tokenizer = BartTokenizer.from_pretrained(args.model)
-    config = BartWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
+    if args.model == 'facebook/bart-base':
+        tokenizer = BartTokenizer.from_pretrained(args.model)
+        config = BartWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
+    elif args.model == 'roberta-base':
+        tokenizer = RobertaTokenizer.from_pretrained(args.model)
+        config = RobertaWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
+    else:
+        raise NotImplementedError 
     merge_args_into_config(args, config)
 
     # bart_model = BartForConditionalGenerationWithAdapter(config)
-    bart_model = BartForSequenceClassificationWithAdapter(config)
+    if args.model == 'facebook/bart-base':
+        bart_model = BartForSequenceClassificationWithAdapter(config)
+    elif args.model == 'roberta-base':
+        bart_model = RobertaForSequenceClassificationWithAdapter(config)
+    else:
+        raise NotImplementedError 
     # if args.do_train and args.checkpoint is None:
     bart_model, debug_info = bart_model.from_pretrained(args.model, config=config, output_loading_info=True)
     add_special_tokens(bart_model, tokenizer, args)
