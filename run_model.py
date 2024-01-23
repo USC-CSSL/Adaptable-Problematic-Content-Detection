@@ -2,11 +2,12 @@ import os
 import numpy as np
 import torch
 import torch.nn.functional as F
-from transformers import BartTokenizer, RobertaTokenizer 
+from transformers import BartTokenizer, RobertaTokenizer, XLMRobertaTokenizer
 from transformers import AdamW, get_linear_schedule_with_warmup, BartForConditionalGeneration
 from nets.adapter_bart import BartForSequenceClassificationWithAdapter, BartWithAdapterConfig
 
 from nets.adapter_roberta import RobertaForSequenceClassificationWithAdapter, RobertaWithAdapterConfig
+from nets.adapter_xlm_roberta import XLMRobertaForSequenceClassificationWithAdapter, XLMRobertaWithAdapterConfig
 from nets.cl_model import ConditionedHyperNetForCL, ConditionalHyperNetL2Reg
 
 from nets.regularizers import Weight_Regularized_AdamW
@@ -53,6 +54,9 @@ def run(args, logger):
     elif args.model == 'roberta-base':
         tokenizer = RobertaTokenizer.from_pretrained(args.model)
         config = RobertaWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
+    elif args.model == 'xlm-roberta-base':
+        tokenizer = XLMRobertaTokenizer.from_pretrained(args.model)
+        config = XLMRobertaWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
     else:
         raise NotImplementedError 
     merge_args_into_config(args, config)
@@ -62,6 +66,8 @@ def run(args, logger):
         bart_model = BartForSequenceClassificationWithAdapter(config)
     elif args.model == 'roberta-base':
         bart_model = RobertaForSequenceClassificationWithAdapter(config)
+    elif args.model == 'xlm-roberta-base':
+        bart_model = XLMRobertaForSequenceClassificationWithAdapter(config)
     else:
         raise NotImplementedError 
     # if args.do_train and args.checkpoint is None:
