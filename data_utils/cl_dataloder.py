@@ -149,7 +149,7 @@ class TaskSequence(object):
 #                     positive_samples = sum([x[4] for x in self.encoded_dataset[task_key][split]])/len( self.encoded_dataset[task_key][split])
                 data = self.encoded_dataset[task_key][split]
                 # IPython.embed(); exit();
-                if task_key in self.args.shuffle_task_keys:
+                if "shuffle_task_keys" in self.args and task_key in self.args.shuffle_task_keys:
                     mutable_list = list(data.targets)
                     random.shuffle(mutable_list)
                     data.targets = tuple(mutable_list)

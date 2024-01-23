@@ -1,7 +1,10 @@
 from transformers.models.roberta.modeling_roberta import RobertaEncoder, RobertaModel, \
     RobertaLayer, RobertaForSequenceClassification, RobertaClassificationHead
 from transformers.modeling_utils import apply_chunking_to_forward
-from torch.nn import CrossEntropyLoss, MSELoss
+from transformers.models.bart.modeling_bart import  CrossEntropyLoss
+
+# from transformers.models.roberta.modeling_roberta import CrossEntropyLoss, MSELoss
+# from torch.nn import CrossEntropyLoss, MSELoss
 from transformers.models.roberta.configuration_roberta import RobertaConfig
 from transformers.modeling_outputs import SequenceClassifierOutput
 from transformers.models.bert.configuration_bert import BertConfig
@@ -194,7 +197,7 @@ class RobertaLayerWithAdapter(RobertaLayer, ModelWithAdapter):
     def __init__(self, config: RobertaConfig):
         super().__init__(config)
         self.adapter_dim = config.adapter_dim
-        self.init_adapter(self.embed_dim, self.adapter_dim, self.embed_dim, config)
+        self.init_adapter(config.hidden_size, self.adapter_dim, config.hidden_size, config)
         
         self.register_adapter_name_to_weight(['adapter_down_weight', 'adapter_down_bias','adapter_up_weight',
                                               'adapter_up_bias'],[self.adapter_down_weight, self.adapter_down_bias,
@@ -271,17 +274,17 @@ class RobertaLayerWithAdapter(RobertaLayer, ModelWithAdapter):
         return outputs
 
 class RoberaEncodeWithAdapter(RobertaEncoder):
-    def __init__(self, config: RobertaConfig, embed_tokens):
-        super(RoberaEncodeWithAdapter, self).__init__(config, embed_tokens)
+    def __init__(self, config: RobertaConfig):
+        super(RoberaEncodeWithAdapter, self).__init__(config)
         self.layers = nn.ModuleList(
-            [RobertaLayerWithAdapter(config) for _ in range(config.encoder_layers)]
+            [RobertaLayerWithAdapter(config) for _ in range(config.num_hidden_layers)]
         )
 
 
 class RobertaModelWithAdapter(RobertaModel):
-    def __init__(self, config: RobertaConfig):
-        super(RobertaModelWithAdapter, self).__init__(config)
-        self.encoder = RoberaEncodeWithAdapter(config, self.shared)
+    def __init__(self, config: RobertaConfig, add_pooling_layer=True):
+        super(RobertaModelWithAdapter, self).__init__(config, add_pooling_layer=add_pooling_layer)
+        self.encoder = RoberaEncodeWithAdapter(config)
 
 
 class RobertaForSequenceClassificationWithAdapter(RobertaForSequenceClassification, ModelWithAdapter):
@@ -301,7 +304,7 @@ class RobertaForSequenceClassificationWithAdapter(RobertaForSequenceClassificati
             self.classification_head = RobertaClassificationHead(config)
             self.reinit_classification_head(classification_head=self.classification_head)
         self.config = config
-        self.config.sep_token_id = 50265
+        # self.config.sep_token_id = 50265
         
         # self.adapter_down_weight, self.adapter_down_bias, self.adapter_up_weight, self.adapter_up_bias = \
         #     None, None, None, None
@@ -315,7 +318,7 @@ class RobertaForSequenceClassificationWithAdapter(RobertaForSequenceClassificati
         self.classification_head = self.classification_heads_dict[task_name]
     
     def get_children_adapter_modules(self):
-        return [_ for _ in self.model.encoder.layers] + [_ for _ in self.model.decoder.layers]
+        return [_ for _ in self.model.encoder.layers] #+ [_ for _ in self.model.decoder.layers]
     
     def get_adapter_dims(self):
         adapter_modules = self.get_children_adapter_modules()
