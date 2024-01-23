@@ -2,7 +2,7 @@ from transformers.models.roberta.modeling_roberta import RobertaEncoder, Roberta
     RobertaLayer, RobertaForSequenceClassification, RobertaClassificationHead
 from transformers.modeling_utils import apply_chunking_to_forward
 from transformers.models.bart.modeling_bart import  CrossEntropyLoss
-
+from transformers.activations import ACT2FN
 # from transformers.models.roberta.modeling_roberta import CrossEntropyLoss, MSELoss
 # from torch.nn import CrossEntropyLoss, MSELoss
 from transformers.models.roberta.configuration_roberta import RobertaConfig
@@ -52,6 +52,7 @@ class RobertaWithAdapterConfig(BertConfig):
             adapter_dim=64,
             adapt_layer_norm=False,
             unfreeze_hyper_encoder=False,
+            activation_function="gelu",
             **kwargs
     ):
         super().__init__(pad_token_id=pad_token_id, **kwargs)
@@ -79,7 +80,7 @@ class RobertaWithAdapterConfig(BertConfig):
         self.generator_hdim_small = 1
         self.adapt_layer_norm = adapt_layer_norm
         self.unfreeze_hyper_encoder = unfreeze_hyper_encoder
-
+        self.activation_function = activation_function
 
 class ModelWithAdapter(nn.Module):
     
@@ -197,6 +198,7 @@ class RobertaLayerWithAdapter(RobertaLayer, ModelWithAdapter):
     def __init__(self, config: RobertaConfig):
         super().__init__(config)
         self.adapter_dim = config.adapter_dim
+        self.activation_fn = ACT2FN[config.activation_function]
         self.init_adapter(config.hidden_size, self.adapter_dim, config.hidden_size, config)
         
         self.register_adapter_name_to_weight(['adapter_down_weight', 'adapter_down_bias','adapter_up_weight',
@@ -222,14 +224,15 @@ class RobertaLayerWithAdapter(RobertaLayer, ModelWithAdapter):
             output_attentions=output_attentions,
             past_key_value=self_attn_past_key_value,
         )
-        if not self.skip_adapter:
-            residual_adapter = self_attention_outputs
-            self_attention_outputs = self.adapter_down(self_attention_outputs)
-            self_attention_outputs = self.activation_fn(self_attention_outputs)
-            self_attention_outputs = self.adapter_up(self_attention_outputs)
-            self_attention_outputs = residual_adapter + self_attention_outputs
-            
+
         attention_output = self_attention_outputs[0]
+
+        if not self.skip_adapter:
+            residual_adapter = attention_output
+            attention_output = self.adapter_down(attention_output)
+            attention_output = self.activation_fn(attention_output)
+            attention_output = self.adapter_up(attention_output)
+            attention_output = residual_adapter + attention_output
 
         # if decoder, the last output is tuple of self-attn cache
         if self.is_decoder:
@@ -276,7 +279,7 @@ class RobertaLayerWithAdapter(RobertaLayer, ModelWithAdapter):
 class RoberaEncodeWithAdapter(RobertaEncoder):
     def __init__(self, config: RobertaConfig):
         super(RoberaEncodeWithAdapter, self).__init__(config)
-        self.layers = nn.ModuleList(
+        self.layer  = nn.ModuleList(
             [RobertaLayerWithAdapter(config) for _ in range(config.num_hidden_layers)]
         )
 
@@ -291,7 +294,7 @@ class RobertaForSequenceClassificationWithAdapter(RobertaForSequenceClassificati
     def __init__(self, config: RobertaConfig):
         super().__init__(config)
         self.num_labels = config.num_labels
-        self.model = RobertaModelWithAdapter(config, add_pooling_layer=False)
+        self.roberta = RobertaModelWithAdapter(config, add_pooling_layer=False)
         
         if config.mtl:
             if len(config.tasks) != config.mtl_task_num:
@@ -311,14 +314,14 @@ class RobertaForSequenceClassificationWithAdapter(RobertaForSequenceClassificati
         self.task_name_to_vocab_space = None
     
     def reinit_classification_head(self, classification_head):
-        self.model._init_weights(classification_head.dense)
-        self.model._init_weights(classification_head.out_proj)
+        self.roberta._init_weights(classification_head.dense)
+        self.roberta._init_weights(classification_head.out_proj)
     
     def set_classification_head(self, task_name):
         self.classification_head = self.classification_heads_dict[task_name]
     
     def get_children_adapter_modules(self):
-        return [_ for _ in self.model.encoder.layers] #+ [_ for _ in self.model.decoder.layers]
+        return [_ for _ in self.roberta.encoder.layer] #+ [_ for _ in self.model.decoder.layers]
     
     def get_adapter_dims(self):
         adapter_modules = self.get_children_adapter_modules()
@@ -382,7 +385,7 @@ class RobertaForSequenceClassificationWithAdapter(RobertaForSequenceClassificati
         """
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
-        outputs = self.model(
+        outputs = self.roberta(
             input_ids,
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
