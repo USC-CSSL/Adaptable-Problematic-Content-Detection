@@ -76,7 +76,13 @@ def run(args, logger):
     # bart_model.reinit_classification_head()
     # from IPython import embed; embed(); exit()
     main_task_sequence = TaskSequence(args, args.tasks, tokenizer, few_shot=args.few_shot_training)
-
+    # creating memory for continual learning
+    memory = None
+    if args.memory == 'er':
+        memory = copy.deepcopy(main_task_sequence)
+        memory = memory.trim_subset(args.memory_size//len(args.tasks))
+        memory = memory.get_dataloader_sequence_iterator()
+    
     if args.cl_method in ['naive', 'ewc']:
         model = ConditionedHyperNetForCL(args, bart_model, config)
     elif args.cl_method == 'hnet':
@@ -130,7 +136,7 @@ def run(args, logger):
                 train(
                     args, config, logger, model, tokenizer, train_loader, task_id, optimizer, scheduler,
                     main_task_sequence, fewshot=False, task_name=task_name,
-                    eval_this_task_only=args.eval_every_k_tasks > 1,
+                    eval_this_task_only=args.eval_every_k_tasks > 1, memory=memory
                 )
         else:
             # multi-task learning
@@ -200,7 +206,7 @@ def get_regularizer(args, config, model, current_task_id, train_dataloader):
 def train(args, config, logger, model, tokenizer, train_dataloader, task_id, optimizer, scheduler,
           main_task_sequence, eval_at_epoch_end=None, max_train_step=None, eval_period=None, postfix='',
           eval_this_task_only=False,
-          fewshot=False, task_name=None, mtl_max_task=None, mtl=False):
+          fewshot=False, task_name=None, mtl_max_task=None, mtl=False, memory=None, replay_freq=100):
     global TRIM_FLG
     model.train()
     eval_period, eval_at_epoch_end = args.eval_period if eval_period is None else eval_period, \
@@ -346,6 +352,10 @@ def train(args, config, logger, model, tokenizer, train_dataloader, task_id, opt
                 model.train()
                 if args.freeze_layer_norm:
                     freeze_layer_norm(model)
+                    
+            if global_step % replay_freq == 0 and memory is not None:
+                memory.store(cq_inputs, cq_attention_mask, ans_inputs, ans_attention_mask, lb, task_id)
+                
         if stop_training:
             break
 
