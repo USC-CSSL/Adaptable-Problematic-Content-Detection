@@ -10,7 +10,8 @@ BIN_PROMPTS = {
     'potuguese-insult' : 'Is this post insulting?',
     'potuguese-racism' : 'Does this post include racism?',
     'potuguese-misogyny' : 'Does this include misogyny?',
-    'potuguese-xenophobia' : 'Does this include xenophobia?'
+    'potuguese-xenophobia' : 'Does this include xenophobia?',
+    'potuguse-hate' : 'Does this include hate speech?'
 }
 
 BIN_LABEL_MAPPINGS = {
@@ -19,7 +20,8 @@ BIN_LABEL_MAPPINGS = {
     'potuguese-insult' : ["no","yes"],
     'potuguese-racism' : ["no","yes"],
     'potuguese-misogyny' : ["no","yes"],
-    'potuguese-xenophobia' : ["no","yes"]
+    'potuguese-xenophobia' : ["no","yes"],
+    'potuguse-hate' : ["no","yes"]
 }
 
 

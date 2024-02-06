@@ -9,7 +9,7 @@ BIN_PROMPT = 'Was this comment deleted?'
 BIN_LABEL_MAPPING = ["no","yes"]
 
 
-class EstonianDataset(LAMOLDataset):
+class Estonian1Dataset(LAMOLDataset):
     def __init__(self, args, task_name, split, tokenizer, gen_token, full_init=True, use_vocab_space=True, **kwargs):
         super().__init__(args, task_name, split, tokenizer, gen_token, full_init=False, use_vocab_space=use_vocab_space, **kwargs)
         if self.split == 'dev':
@@ -17,6 +17,9 @@ class EstonianDataset(LAMOLDataset):
         if full_init:
             self.init_data()
 
+        # in the original data it is is_enabled
+        self.label_column_name = 'moderated'
+        
     def init_data(self):
         data = []
         prompt = BIN_PROMPT
@@ -27,7 +30,7 @@ class EstonianDataset(LAMOLDataset):
         # TODO: change to following code to apply function to each row
         for _, item in df.iterrows():
             context = item['content']
-            answer = item['is_enabled']
+            answer = item[self.label_column_name]
             if answer == 0:
                 answer = 'yes'
             else:

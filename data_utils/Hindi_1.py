@@ -19,7 +19,7 @@ BIN_LABEL_MAPPINGS = {
 }
 
 
-class Croatian2Dataset(LAMOLDataset):
+class Hindi1Dataset(LAMOLDataset):
     def __init__(self, args, task_name, split, tokenizer, gen_token, full_init=True, use_vocab_space=True, **kwargs):
         super().__init__(args, task_name, split, tokenizer, gen_token, full_init=False, use_vocab_space=use_vocab_space, **kwargs)
         if self.split == 'dev':

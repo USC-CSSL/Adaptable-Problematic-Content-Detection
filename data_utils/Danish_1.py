@@ -17,6 +17,9 @@ class Danish1Dataset(LAMOLDataset):
         if full_init:
             self.init_data()
 
+        # in the original data it is label
+        self.label_column_name = 'offensive'
+        
     def init_data(self):
         data = []
         prompt = BIN_PROMPT
@@ -27,7 +30,7 @@ class Danish1Dataset(LAMOLDataset):
         # TODO: change to following code to apply function to each row
         for _, item in df.iterrows():
             context = item['text']
-            answer = item['label']
+            answer = item[self.label_column_name]
             if answer == 'OFF':
                 answer = 'yes'
             else:

@@ -9,14 +9,16 @@ BIN_PROMPT = 'Is it offensive?'
 BIN_LABEL_MAPPING = ["no","yes"]
 
 
-class AlbanianDataset(LAMOLDataset):
+class Albanian1Dataset(LAMOLDataset):
     def __init__(self, args, task_name, split, tokenizer, gen_token, full_init=True, use_vocab_space=True, **kwargs):
         super().__init__(args, task_name, split, tokenizer, gen_token, full_init=False, use_vocab_space=use_vocab_space, **kwargs)
         if self.split == 'dev':
             self.split = 'val'
         if full_init:
             self.init_data()
-
+            
+        # in the original data it is subtask_a
+        self.label_column_name = 'offensive' 
     def init_data(self):
         data = []
         prompt = BIN_PROMPT
@@ -27,7 +29,7 @@ class AlbanianDataset(LAMOLDataset):
         # TODO: change to following code to apply function to each row
         for _, item in df.iterrows():
             context = item['text']
-            answer = item['subtask_a']
+            answer = item[self.label_column_name]
             if answer == 0:
                 answer = 'yes'
             else:

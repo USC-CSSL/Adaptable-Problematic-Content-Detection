@@ -9,7 +9,8 @@ BIN_PROMPTS = {
     'german-racism' : 'Does the comment include racism?',
     'german-threat' : 'Is the comment threatening?',
     'german-insult' : 'Is the comment insulting',
-    'german-profanity' : 'Does the comment include profanity?'
+    'german-profanity' : 'Does the comment include profanity?',
+    'german-offensive' : 'Is the comment offensive?'
 }
 
 BIN_LABEL_MAPPINGS = {
@@ -17,11 +18,12 @@ BIN_LABEL_MAPPINGS = {
     'german-racism' : ["no","yes"],
     'german-threat' : ["no","yes"],
     'german-insult' : ["no","yes"],
-    'german-profanity' : ["no","yes"]
+    'german-profanity' : ["no","yes"],
+    'german-offensive' : ["no","yes"]
 }
 
 
-class GermanDataset(LAMOLDataset):
+class German1Dataset(LAMOLDataset):
     def __init__(self, args, task_name, split, tokenizer, gen_token, full_init=True, use_vocab_space=True, **kwargs):
         super().__init__(args, task_name, split, tokenizer, gen_token, full_init=False, use_vocab_space=use_vocab_space, **kwargs)
         if self.split == 'dev':
