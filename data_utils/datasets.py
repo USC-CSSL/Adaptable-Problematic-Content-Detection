@@ -21,6 +21,20 @@ from .leopard_datasets import *
 from .mbpa_datasets import *
 from .crossfit_qa_datasets import *
 from .crossfit_cls_datasets import *
+from .Italian_1 import Italian1Dataset
+from .Ukranian_1 import UkranianDataset
+from .Chinese_1 import Chinese1Dataset
+from .Latvian_1 import Latvian1Dataset
+from .Turkish_1 import Turkish1Dataset
+from .Portuguese_1 import PortugueseDataset 
+from .Greek_1 import Greek1Dataset  
+from .Danish_1 import Danish1Dataset
+from .Albanian_1 import Albanian1Dataset
+from .German_1 import German1Dataset
+from .Russian_1 import Russian1Dataset
+from .Arabic_1 import Arabic1Dataset
+from .Estonian_1 import Estonian1Dataset
+from .Hindi_1 import Hindi1Dataset
 import random
 
 KILT_TASKS = ['fever', 'trex', 'structured_zeroshot',
@@ -368,6 +382,28 @@ PUBLISHED_TEMPORAL_SET = ['personal_attack-a', 'personal_attack-tpa', 'personal_
                           'hate-offensive',  'hate-hateful'
                           ]
 
+ITALIAN_TASKS = ['italian']
+UKRANINAN_TASKS = ['ukraninan']
+CHINESE_TASKS = ['chinese']
+LATVIAN_TASKS = ['latvian']
+TURKISH_TASKS = ['turkish']
+PORTUGUESE_TASKS = ['potuguese-homophobia', 'potuguese-obscene', 'potuguese-insult', 'potuguese-racism', 'potuguese-misogyny', 'potuguese-xenophobia', 'potuguse-hate']
+GREEK_TASKS = ['greek']
+DANISH_TASKS = ['danish']
+ALBANIAN_TASKS = ['albanian']
+GERMAN_TASKS = ['german-sexism', 'german-racism', 'german-threat', 'german-insult', 'german-profanity', 'german-offensive']
+RUSSIAN_TASKS = ['russian']
+ARABIC_TASKS = ['arabic']
+ESTONIAN_TASKS = ['estonian']
+HINDI_TASKS = ['hindi-fake', 'hindi-hate', 'hindi-offensive', 'hindi-defamation']
+
+MULTILINGUAL_HAMILTONIAN = ['russian', 'arabic', 'estonian', 'chinese', 'stormfront', 'albanian', 
+                            'italian', 'danish', 'ukraninan', 'latvian', 'german', 'portuguese', 
+                            'greek', 'hindi', 'turkish']
+
+MULTILINGUAL_RANDOM_1 = ['arabic', 'estonian', 'hindi', 'german', 'albanian', 'russian', 
+                         'stormfront', 'greek', 'danish', 'turkish', 'latvian', 
+                         'portuguese', 'italian', 'ukraninan', 'chinese']
 
 SHUFFLED_PUBLISHED_TEMPORAL_SET = [ 'personal_attack-ra', 'personal_attack-tpa', 'personal_attack-a',  
                           'jigsaw-toxicity',  'jigsaw-insult',  'jigsaw-obscene', 'jigsaw-identity_attack', 'jigsaw-threat',
@@ -408,6 +444,10 @@ def task_collection_to_tasks(collection_full_name):
         tasks = PILOT_SET_FS_TASKS
     elif collection_name == 'shuffle_tasks_set_1':
         tasks = SHUFFLE_TEMPORAL_SET_1
+    elif collection_name == 'multilingual_hamiltonian':
+        tasks = MULTILINGUAL_HAMILTONIAN
+    elif collection_name == 'multilingual_random_1':
+        tasks = MULTILINGUAL_RANDOM_1
     if len(items) > 1:
         start = int(items[1])
         stop = int(items[2])
@@ -476,6 +516,34 @@ def get_dataset(args, task_name, split, tokenizer: PreTrainedTokenizer,
         DATASET_CLS = HateDataset
     elif task_name in JIGSAW_TASKS:
         DATASET_CLS = JigsawDataset
+    elif task_name in ITALIAN_TASKS:
+        DATASET_CLS = Italian1Dataset
+    elif task_name in UKRANINAN_TASKS:
+        DATASET_CLS = UkranianDataset
+    elif task_name in CHINESE_TASKS:
+        DATASET_CLS = Chinese1Dataset
+    elif task_name in LATVIAN_TASKS:
+        DATASET_CLS = Latvian1Dataset
+    elif task_name in TURKISH_TASKS:
+        DATASET_CLS = Turkish1Dataset
+    elif task_name in PORTUGUESE_TASKS:
+        DATASET_CLS = PortugueseDataset
+    elif task_name in GREEK_TASKS:
+        DATASET_CLS = Greek1Dataset
+    elif task_name in DANISH_TASKS:
+        DATASET_CLS = Danish1Dataset
+    elif task_name in ALBANIAN_TASKS:
+        DATASET_CLS = Albanian1Dataset
+    elif task_name in GERMAN_TASKS:
+        DATASET_CLS = German1Dataset
+    elif task_name in RUSSIAN_TASKS:
+        DATASET_CLS = Russian1Dataset
+    elif task_name in ARABIC_TASKS:
+        DATASET_CLS = Arabic1Dataset
+    elif task_name in ESTONIAN_TASKS:
+        DATASET_CLS = Estonian1Dataset
+    elif task_name in HINDI_TASKS:
+        DATASET_CLS = Hindi1Dataset
     else:
         raise NotImplementedError
     dataset = DATASET_CLS(args, task_name, split, tokenizer,
