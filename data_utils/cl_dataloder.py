@@ -169,25 +169,25 @@ class TaskSequence(object):
                 self.data_loader_maps[task_key][split] = data_loader
 
 
-        # state the label space from the training set
-        for task_key in self.encoded_dataset:
-            train_examples = [_ for _ in self.encoded_dataset[task_key]['train']]
-            train_ans = [x[2] for x in train_examples]
-            tokens = set()
+        # # state the label space from the training set
+        # for task_key in self.encoded_dataset:
+        #     train_examples = [_ for _ in self.encoded_dataset[task_key]['train']]
+        #     train_ans = [x[2] for x in train_examples]
+        #     tokens = set()
 
-            for ans in train_ans:
-                for word in ans:
-                    tokens.add(word)
+        #     for ans in train_ans:
+        #         for word in ans:
+        #             tokens.add(word)
 
-            spec_token_ids = self.tokenizer.convert_tokens_to_ids([_ for _ in self.tokenizer.special_tokens_map.items()])
-            tokens.update(spec_token_ids)
-            self.label_vocab_space_map[task_key] = list(tokens)
+        #     spec_token_ids = self.tokenizer.convert_tokens_to_ids([_ for _ in self.tokenizer.special_tokens_map.items()])
+        #     tokens.update(spec_token_ids)
+        #     self.label_vocab_space_map[task_key] = list(tokens)
 
-            labels = set()
-            if len(train_examples[0]) > 4:
-                for example in train_examples:
-                    labels.add(example[4])
-            self.label_class_space_map[task_key] = sorted(list(labels))
+        #     labels = set()
+        #     if len(train_examples[0]) > 4:
+        #         for example in train_examples:
+        #             labels.add(example[4])
+        #     self.label_class_space_map[task_key] = sorted(list(labels))
 
 
     def trim_subset(self, dataset: LAMOLDataset, n):

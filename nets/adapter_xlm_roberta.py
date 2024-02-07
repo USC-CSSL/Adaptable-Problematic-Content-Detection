@@ -1,4 +1,4 @@
-from adapter_roberta import (RobertaForSequenceClassificationWithAdapter, 
+from .adapter_roberta import (RobertaForSequenceClassificationWithAdapter, 
                              RobertaModelWithAdapter,
                              RobertaWithAdapterConfig)
 

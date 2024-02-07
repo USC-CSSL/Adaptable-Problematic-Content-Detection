@@ -2,7 +2,7 @@ import os
 import numpy as np
 import torch
 import torch.nn.functional as F
-from transformers import BartTokenizer, RobertaTokenizer, XLMRobertaTokenizer
+from transformers import BartTokenizer, AutoTokenizer
 from transformers import AdamW, get_linear_schedule_with_warmup, BartForConditionalGeneration
 from nets.adapter_bart import BartForSequenceClassificationWithAdapter, BartWithAdapterConfig
 
@@ -52,10 +52,10 @@ def run(args, logger):
         tokenizer = BartTokenizer.from_pretrained(args.model)
         config = BartWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
     elif args.model == 'roberta-base':
-        tokenizer = RobertaTokenizer.from_pretrained(args.model)
+        tokenizer = AutoTokenizer.from_pretrained(args.model)
         config = RobertaWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
     elif args.model == 'xlm-roberta-base':
-        tokenizer = XLMRobertaTokenizer.from_pretrained(args.model)
+        tokenizer = AutoTokenizer.from_pretrained(args.model)
         config = XLMRobertaWithAdapterConfig.from_pretrained(args.model, num_labels=2) # add label2id id2label! 
     else:
         raise NotImplementedError 
@@ -72,7 +72,7 @@ def run(args, logger):
         raise NotImplementedError 
     # if args.do_train and args.checkpoint is None:
     bart_model, debug_info = bart_model.from_pretrained(args.model, config=config, output_loading_info=True)
-    add_special_tokens(bart_model, tokenizer, args)
+    # add_special_tokens(bart_model, tokenizer, args)
     # bart_model.reinit_classification_head()
     # from IPython import embed; embed(); exit()
     main_task_sequence = TaskSequence(args, args.tasks, tokenizer, few_shot=args.few_shot_training)
@@ -86,7 +86,7 @@ def run(args, logger):
 
     optimizer_grouped_parameters = get_trainable_params(args, model)
     optimizer, scheduler = get_optimizer(args, model, optimizer_grouped_parameters)
-    model.set_label_vocab_space(main_task_sequence.get_label_space_map())
+    # model.set_label_vocab_space(main_task_sequence.get_label_space_map()) # we do not use it because our tasks are classifications
 
     opt_param_count = count_optimized_params(optimizer_grouped_parameters)
     param_count = count_params(model)
@@ -553,9 +553,7 @@ if __name__ == '__main__':
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     args.n_gpu = torch.cuda.device_count()
-    print("---------------------------", "\n"*20)
-    print(args.n_gpu)
-    print("---------------------------", "\n"*20)
+    
     if args.n_gpu > 0:
         torch.cuda.manual_seed_all(args.seed)
 

@@ -70,8 +70,8 @@ class SingleTaskEmbedding(nn.Module):
         if config.task_encoder_model == 'bart':
             self.bart = BartModel.from_pretrained('facebook/bart-base')
         else:
-            self.bart = AutoModel.from_pretrained('sentence-transformers/paraphrase-xlm-r-multilingual-v1') # actually works better
-
+            # self.bart = AutoModel.from_pretrained('sentence-transformers/paraphrase-xlm-r-multilingual-v1') # actually works better
+            self.bart = AutoModel.from_pretrained('xlm-roberta-base') 
     def forward(self, cq_input, cq_input_mask, ans_input, ans_input_mask):
         if self.config.task_encoder_model == 'bart':
             outputs = self.bart(cq_input, cq_input_mask, ans_input, ans_input_mask)

@@ -33,6 +33,7 @@ def Linear(in_features, out_features, bias=True):
 class RobertaWithAdapterConfig(BertConfig):
     def __init__(
             self,
+            d_model=768,
             vocab_size=30522,
             hidden_size=768,
             num_hidden_layers=12,
@@ -72,7 +73,7 @@ class RobertaWithAdapterConfig(BertConfig):
         self.gradient_checkpointing = gradient_checkpointing
         self.position_embedding_type = position_embedding_type
         self.use_cache = use_cache
-    
+        self.d_model = d_model
 
         # Adapter
         self.adapter_dim = adapter_dim

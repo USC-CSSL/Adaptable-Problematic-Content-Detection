@@ -382,6 +382,16 @@ PUBLISHED_TEMPORAL_SET = ['personal_attack-a', 'personal_attack-tpa', 'personal_
                           'hate-offensive',  'hate-hateful'
                           ]
 
+SHUFFLED_PUBLISHED_TEMPORAL_SET = [ 'personal_attack-ra', 'personal_attack-tpa', 'personal_attack-a',  
+                          'jigsaw-toxicity',  'jigsaw-insult',  'jigsaw-obscene', 'jigsaw-identity_attack', 'jigsaw-threat',
+                          'abusive-hateful', 'abusive-abusive',  
+                          'ghc-vo', 'ghc-hd',  
+                          'ucc-generalisation', 'ucc-hostile', 'ucc-sarcastic',  'ucc-antagonize',  'ucc-condescending', 'ucc-generalisation_unfair', 'ucc-dismissive',  'ucc-healthy',  
+                          'dygen-hate', 
+                          'cad-persondirectedabuse',  'cad-affiliationdirectedabuse', 'cad-identitydirectedabuse',
+                          'hate-hateful', 'hate-offensive',  
+                          ]
+
 ITALIAN_TASKS = ['italian']
 UKRANINAN_TASKS = ['ukraninan']
 CHINESE_TASKS = ['chinese']
@@ -398,22 +408,12 @@ ESTONIAN_TASKS = ['estonian']
 HINDI_TASKS = ['hindi-fake', 'hindi-hate', 'hindi-offensive', 'hindi-defamation']
 
 MULTILINGUAL_HAMILTONIAN = ['russian', 'arabic', 'estonian', 'chinese', 'stormfront', 'albanian', 
-                            'italian', 'danish', 'ukraninan', 'latvian', 'german', 'portuguese', 
-                            'greek', 'hindi', 'turkish']
+                            'italian', 'danish', 'ukraninan', 'latvian', 'german-offensive', 'potuguse-hate', 
+                            'greek', 'hindi-hate', 'turkish']
 
-MULTILINGUAL_RANDOM_1 = ['arabic', 'estonian', 'hindi', 'german', 'albanian', 'russian', 
+MULTILINGUAL_RANDOM_1 = ['arabic', 'estonian', 'hindi-hate', 'german-offensive', 'albanian', 'russian', 
                          'stormfront', 'greek', 'danish', 'turkish', 'latvian', 
-                         'portuguese', 'italian', 'ukraninan', 'chinese']
-
-SHUFFLED_PUBLISHED_TEMPORAL_SET = [ 'personal_attack-ra', 'personal_attack-tpa', 'personal_attack-a',  
-                          'jigsaw-toxicity',  'jigsaw-insult',  'jigsaw-obscene', 'jigsaw-identity_attack', 'jigsaw-threat',
-                          'abusive-hateful', 'abusive-abusive',  
-                          'ghc-vo', 'ghc-hd',  
-                          'ucc-generalisation', 'ucc-hostile', 'ucc-sarcastic',  'ucc-antagonize',  'ucc-condescending', 'ucc-generalisation_unfair', 'ucc-dismissive',  'ucc-healthy',  
-                          'dygen-hate', 
-                          'cad-persondirectedabuse',  'cad-affiliationdirectedabuse', 'cad-identitydirectedabuse',
-                          'hate-hateful', 'hate-offensive',  
-                          ]
+                         'potuguse-hate', 'italian', 'ukraninan', 'chinese']
 
 def task_collection_to_tasks(collection_full_name):
     items = collection_full_name.split(':')
