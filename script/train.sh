@@ -21,7 +21,7 @@ pretrianed_model='xlm-roberta-base'
 
 # models=("BiHNet-Reg" "BiHNet-EWC" "Adapter-Vanilla" "BiHNet-Vanilla" "Adapter-Multitask" "BiHNet-Multitask")
 models=("BiHNet-Reg")
-gpus=(7)
+gpus=(6)
 
 total_runs=$((${#models[@]}))
 current_run=1
@@ -33,14 +33,16 @@ for model_index in "${!models[@]}"; do
     SESSION_NAME="${model}_${task_collection}_gpu_${gpu}"
 
     if [ "$model" = "BiHNet-Reg" ]; then
-        screen -dmS "$SESSION_NAME" bash -c "CUDA_VISIBLE_DEVICES=$gpu python run_model.py --output_dir runs/BiHNet_Reg_${task_collection}_${reg}_s64_d256_limit/${lr}/${seed} \
+        screen -dmS "$SESSION_NAME" bash -c "
+        CUDA_VISIBLE_DEVICES=$gpu python run_model.py --output_dir runs/BiHNet_Reg_${task_collection}_${reg}_s64_d256_limit/${lr}/${seed} \
                                                                         --model ${pretrianed_model} \
                                                                         --do_train --eval_period 100000 --eval_at_epoch_end  --wait_step 3 --num_train_epochs 100 --seed ${seed} \
                                                                         --train_batch_size 32 --gradient_accumulation_steps 2 --learning_rate ${lr} --max_output_length 8 \
                                                                         --generator_hdim 32 --example_limit 100 --train_limit 5000  --h_l2reg ${reg} \
                                                                         --adapter_dim 256 --adapter_dim_final 64  --hard_long_term  --limit_label_vocab_space \
                                                                         --sample_batch --scale_loss --stm_size 64 --cl_method hnet --eval_every_k_tasks ${eval_every_k_tasks} \
-                                                                        --task_collection $task_collection --balance_ratio 0.3 ; exit"
+                                                                        --task_collection $task_collection --balance_ratio 0.3 
+                                                                        ; exit "
     elif [ "$model" = "BiHNet-EWC" ]; then
         screen -dmS "$SESSION_NAME" bash -c "CUDA_VISIBLE_DEVICES=$gpu python run_model.py --output_dir runs/BiHNet_ewc_${task_collection}_${reg}_s64_d256_limit/${lr}/${seed} \
                                                                         --model ${pretrianed_model} \
