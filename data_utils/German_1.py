@@ -42,12 +42,15 @@ class German1Dataset(LAMOLDataset):
             'german-insult' : 'Insult Count Crowd',
             'german-profanity' : 'Profanity Count Crowd'
         }
-        file_name = DATA_DIR + self.split + '.csv'
+        file_name = os.path.join(DATA_DIR, self.split + '.csv')
         df = pd.read_csv(file_name)
+        column = self.task_name.split("-")[1]
+        if self.split == 'train':
+            df = self.sample_stratified(df, column, n_samples=1000, random_state=42)
         # TODO: change to following code to apply function to each row
         for _, item in df.iterrows():
             context = item['text']
-            answer = item[column_guide[self.task_name]]
+            answer = item[column]
             if answer > 0:
                 answer = 'yes'
             else:

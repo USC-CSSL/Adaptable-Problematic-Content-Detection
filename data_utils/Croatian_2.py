@@ -36,7 +36,7 @@ class Croatian2Dataset(LAMOLDataset):
         prompt = BIN_PROMPTS[self.task_name]
         sep_token = self.tokenizer.sep_token
         
-        file_name = DATA_DIR + self.split + '.csv'
+        file_name = os.path.join(DATA_DIR, self.split + '.csv')
         df = pd.read_csv(file_name)
         # TODO: change to following code to apply function to each row
         label_guide =  {

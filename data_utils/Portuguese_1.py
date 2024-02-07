@@ -38,8 +38,11 @@ class PortugueseDataset(LAMOLDataset):
         prompt = BIN_PROMPTS[self.task_name]
         sep_token = self.tokenizer.sep_token
         column = self.task_name.split('-')[1]
-        file_name = DATA_DIR + self.split + '.csv'
+        
+        file_name = os.path.join(DATA_DIR, self.split + '.csv')
         df = pd.read_csv(file_name)
+        if self.split == 'train':
+            df = self.sample_stratified(df, column, n_samples=1000, random_state=42)
         # TODO: change to following code to apply function to each row
         for _, item in df.iterrows():
             context = item['text']

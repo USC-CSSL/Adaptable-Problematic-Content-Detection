@@ -31,15 +31,17 @@ class Hindi1Dataset(LAMOLDataset):
         data = []
         prompt = BIN_PROMPTS[self.task_name]
         sep_token = self.tokenizer.sep_token
-        
-        file_name = DATA_DIR + self.split + '.csv'
+        column = self.task_name.split("-")[1]
+        file_name = os.path.join(DATA_DIR, self.split + '.csv')
         df = pd.read_csv(file_name)
+        if self.split == 'train':
+            df = self.sample_stratified(df, column, n_samples=1000, random_state=42)
         # TODO: change to following code to apply function to each row
-        label_guide =  self.task_name.split('-')[1]
+        # label_guide =  self.task_name.split('-')[1]
         for _, item in df.iterrows():
-            context = item['Post']
-            answer = item['Labels Set']
-            if label_guide in answer:
+            context = item['text']
+            answer = item[column]
+            if answer == 1:
                 answer = 'yes'
             else:
                 answer = 'no'
