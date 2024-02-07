@@ -7,6 +7,7 @@ import re
 import logging
 from collections import OrderedDict
 import random
+from sklearn.model_selection import train_test_split
 
 logger = logging.getLogger(__name__)
 
@@ -387,3 +388,7 @@ class LAMOLDataset(Dataset):
 
     def __getitem__(self, index):
         return self.data[index]
+    
+    def sample_stratified(self, df, label_col, n_samples, random_state=42):
+        _ , df = train_test_split(df, test_size=n_samples, stratify=df[label_col], random_state=random_state)
+        return df
